@@ -109,8 +109,8 @@ public class SceneController
     @FXML   void editClicked()
     {
         System.out.println("Edit was clicked, opening secondary scene.");
-        //VideoGame selectedItem = (VideoGame) ListView.getSelectionModel().getSelectedItem();
-       // openNewScene(selectedItem.id);       
+        VideoGame selectedItem = (VideoGame) listView.getSelectionModel().getSelectedItem();
+        openNewScene(selectedItem.id);       
     }
     
     @FXML   void goClicked()
@@ -156,8 +156,6 @@ public class SceneController
         {
             System.out.println(ex.getMessage());
         }
-    
-
     }
 }
 

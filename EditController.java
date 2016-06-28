@@ -106,7 +106,7 @@ public class EditController
         Genre selectedGenre = (Genre) genreField.getSelectionModel().getSelectedItem();
         videoGame.genreId = selectedGenre.id;
         
-         videoGame.save();
+        videoGame.save();
 
         parent.initialize();
 

@@ -119,7 +119,7 @@ public class VideoGame
             }
             else
             {
-                statement = Application.database.newStatement("UPDATE VideoGames SET name = ?, genreId = ?, developer, description WHERE id = ?");             
+                statement = Application.database.newStatement("UPDATE VideoGames SET name = ?, genreId = ?, developer = ?, description = ? WHERE id = ?");             
                 statement.setString(1, name);
                 statement.setInt(2, genreId);  
                 statement.setString(3, developer);  
@@ -136,6 +136,5 @@ public class VideoGame
         {
             System.out.println("Database result processing error: " + resultsexception.getMessage());
         }
-
     }
 }
