@@ -1,4 +1,6 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -47,12 +49,12 @@ public class SceneController
         System.out.println("Asserting controls...");
         try
         {
-        	assert addButton != null : "Can't find add button.";
-        	assert removeButton != null : "Can't find yesremovebutton.";
-        	assert exitButton != null : "Can't find exit button.";
-        	assert editButton != null : "Can't find edit button.";
-        	assert goButton != null : "Can't find go button.";
-        	assert searchField!= null : "Can't find search field.";
+            assert addButton != null : "Can't find add button.";
+            assert removeButton != null : "Can't find yesremovebutton.";
+            assert exitButton != null : "Can't find exit button.";
+            assert editButton != null : "Can't find edit button.";
+            assert goButton != null : "Can't find go button.";
+            assert searchField!= null : "Can't find search field.";
             assert listView != null : "Can't find list box.";
         }
         catch (AssertionError ae)
@@ -64,8 +66,8 @@ public class SceneController
         /* Next, we load the list of fruit from the database and populate the listView. */
         System.out.println("Populating scene with items from the database...");        
         @SuppressWarnings("unchecked")
-        List<videoGame> targetList = listView.getItems();  // Grab a reference to the listView's current item list.
-        videoGame.readAll(targetList);                     // Hand over control to the fruit model to populate this list.
+        List<VideoGame> targetList = listView.getItems();  // Grab a reference to the listView's current item list.
+        VideoGame.readAll(targetList);                     // Hand over control to the fruit model to populate this list.
     }
 
     /* In order to catch stage events (the main example being the close (X) button being clicked) we need
@@ -89,7 +91,8 @@ public class SceneController
      * The names of these methods are set in Scene Builder so they work automatically. */    
     @FXML   void addClicked()
     {
-        System.out.println("add was clicked!");        
+        System.out.println("Add was clicked, opening secondary scene.");
+        openNewScene(0);
     }
 
     @FXML   void removeClicked()
@@ -117,7 +120,7 @@ public class SceneController
      * item in the view is currently selected (if any) and outputs it to the console. */    
     @FXML   void listViewClicked()
     {
-        videoGame selectedItem = (videoGame) listView.getSelectionModel().getSelectedItem();
+        VideoGame selectedItem = (VideoGame) listView.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null)
         {
@@ -127,7 +130,32 @@ public class SceneController
         {
             System.out.println(selectedItem + " (id: " + selectedItem.id + ") is selected.");
         }
-    }    
+    }  
+    
+    void openNewScene(int id)
+    {
 
+        FXMLLoader loader = new FXMLLoader(Application.class.getResource("Edit.fxml"));
+
+        try
+        {
+            Stage stage2 = new Stage();
+            stage2.setTitle("Details");
+            stage2.setScene(new Scene(loader.load()));
+            stage2.show();           
+            EditController controller2 = loader.getController();
+            controller2.prepareStageEvents(stage2);
+
+            controller2.setParent(this);
+            if (id != 0) controller2.loadItem(id);            
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    
+
+    }
 }
 

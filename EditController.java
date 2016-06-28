@@ -20,10 +20,10 @@ public class EditController
      @FXML   private Button saveButton;
      @FXML   private TextField nameField;
      @FXML   private ChoiceBox genreField;
-     @FXML   private ChoiceBox developerField;
+     @FXML   private TextField developerField;
      @FXML   private TextField descriptionField;
      
-     private videogame videogame;
+     private VideoGame videoGame;
     
     public void EditController()
     {
@@ -36,7 +36,7 @@ public class EditController
         
         this.stage = stage;
         
-        stage.setOnCloseRequest(new EventHandlet<WindowEvent>() {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                public void handle(WindowEvent we){
                    System.out.println("Close button was clicked!");
                 }
@@ -63,12 +63,10 @@ public class EditController
         System.out.println("Populating scene with items from the database...");        
         @SuppressWarnings("unchecked")
         List<Genre> targetList = genreField.getItems();  // Grab a reference to the listView's current item list.
-        genre.readAll(targetList);       
+        Genre.readAll(targetList);       
         genreField.getSelectionModel().selectFirst();
         
-        List<Developer> targetList = developerField.getItems();  // Grab a reference to the listView's current item list.
-        Developer.readAll(targetList);       
-        developerField.getSelectionModel().selectFirst();
+ 
         
     }
     
@@ -79,51 +77,40 @@ public class EditController
     
     public void loadItem(int id)
     {
-        videogame = videogame.getById(id);
-        nameField.setText(video.name);
+        videoGame = VideoGame.getById(id);
+        nameField.setText(videoGame.name);
         
         List<Genre> targetList = genreField.getItems();
         
         for(Genre g : targetList)
         {
-            if (g.id == videogame.genreId)
+            if (g.id == videoGame.genreId)
             {
                 genreField.getSelectionModel().select(g);
             }
         }
         
-         List<Developer> targetList = developerField.getItems();
-        
-        for(Developer d : targetList)
-        {
-            if (d.id == videogame.developerId)
-            {
-                developerField.getSelectionModel().select(d);
-            }
-        }
     }
     
-    @FXML void saveButtonClicked()
+    @FXML void saveClicked()
     {
         System.out.println("Save button clicked!");
         
-        if (videogame == null)
+        if (videoGame == null)
         {
-            videogame = new videogame(0, "", 0);
+            videoGame = new VideoGame(0, "", 0, "", "");
         }
         
-        videogame.name = nameField.gettext();
+        videoGame.name = nameField.getText();
         
         Genre selectedGenre = (Genre) genreField.getSelectionModel().getSelectedItem();
-        videogame.genreId = delectedgenre.id;
+        videoGame.genreId = selectedGenre.id;
         
-        Developer selectedDeveloper = (Developer) developerField.getSelectionModel().getSelectedItem();
-        videogame.developerId = delecteddeveloper.id;
+         videoGame.save();
+
+        parent.initialize();
+
+        stage.close();
         
-        videogame.save();
     }
-    
-    
-    
-    
 }

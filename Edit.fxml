@@ -29,10 +29,10 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="nameField" prefHeight="26.0" prefWidth="306.0" />
+            <TextField fx:id="nameField" prefHeight="26.0" prefWidth="306.0" promptText="Name" />
+            <TextField fx:id="developerField" promptText="Developer" />
             <ChoiceBox fx:id="genreField" prefHeight="26.0" prefWidth="306.0" />
-            <ChoiceBox fx:id="developerField" prefHeight="26.0" prefWidth="306.0" />
-            <TextField fx:id="descriptionField" />
+            <TextField fx:id="descriptionField" promptText="Description" />
          </children>
       </VBox>
    </center>
